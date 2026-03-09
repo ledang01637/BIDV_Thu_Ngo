@@ -38,7 +38,7 @@
         .frame {
             width: 875px;
             height: 1280px; 
-            background-image: url("b.jpg"); 
+            background-image: url("b.jpg"); /* Ảnh nền mặc định */
             background-size: cover; 
             background-position: center top;
             position: relative;
@@ -166,6 +166,11 @@
         <h3>Thông tin Thư Ngỏ</h3>
         
         <div class="input-group">
+            <label>Tải lên Ảnh Nền (Background)</label>
+            <input type="file" id="inp-bg" accept="image/*">
+        </div>
+
+        <div class="input-group">
             <label>Tên Chi Nhánh</label>
             <input type="text" id="inp-branch" value="CHI NHÁNH TÂY SÀI GÒN">
         </div>
@@ -218,7 +223,7 @@
         <button class="print-btn" onclick="window.print()">🖨️ In Thư (Xuất PDF)</button>
     </div>
 
-    <div class="frame">
+    <div class="frame" id="disp-bg">
         <div class="frame-content">
             <img src="a.png" class="logo" alt="BIDV Logo">
             <div class="branch" id="disp-branch" style="margin-left: 20px;">CHI NHÁNH TÂY SÀI GÒN</div>
@@ -354,9 +359,23 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    $('disp-qr').src = event.target.result; // Gán đường dẫn ảnh mới vào thẻ img
+                    $('disp-qr').src = event.target.result; 
                 };
-                // Đọc file dưới dạng Data URL để hiển thị ngay
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ==========================================
+        // XỬ LÝ UPLOAD BACKGROUND
+        // ==========================================
+        $('inp-bg').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // Cập nhật background-image thay vì src
+                    $('disp-bg').style.backgroundImage = `url(${event.target.result})`; 
+                };
                 reader.readAsDataURL(file);
             }
         });
