@@ -19,13 +19,19 @@
             --bidv-yellow-icon: #f5a623;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            /* Chống điện thoại tự động phóng to chữ làm vỡ layout */
+            -webkit-text-size-adjust: 100%; 
+            text-size-adjust: 100%;
+        }
 
         body {
             font-family: 'Times New Roman', Times, serif; 
             background: #d4d4d4; 
             margin: 0;
-            /* Dành không gian bên trái cho bảng điều khiển trên PC */
             padding-left: 340px; 
         }
 
@@ -43,8 +49,9 @@
         ======================= */
         .frame {
             width: 875px;
-            height: 1280px; 
-            flex-shrink: 0; /* QUAN TRỌNG: Ngăn khung bị ép nhỏ và đè chữ */
+            /* Đổi height thành min-height để lỡ chữ dài quá thì khung tự giãn ra, không bị đè */
+            min-height: 1280px; 
+            flex-shrink: 0; 
             background-image: url("b.jpg"); 
             background-size: cover; 
             background-position: center top;
@@ -123,9 +130,16 @@
         .contact-info { color: var(--green-info); font-size: 20px; line-height: 1.55; }
 
         /* =======================
-        BOTTOM BAR
+        BOTTOM BAR - ĐÃ SỬA LỖI ĐÈ CHỮ
         ======================= */
-        .bottom-bar { position: absolute; bottom: 25px; left: 150px; display: flex; gap: 45px; align-items: center; }
+        .bottom-bar { 
+            margin-top: auto; /* Lệnh này tự động đẩy thanh xuống sát đáy thư */
+            padding-top: 30px; /* Tạo một khoảng cách an toàn với phần thông tin liên hệ */
+            display: flex; 
+            gap: 45px; 
+            justify-content: center; /* Căn giữa màn hình */
+            align-items: center; 
+        }
         .bottom-item { display: flex; align-items: center; gap: 10px; color: var(--green); font-weight: 700; font-family: Arial, sans-serif; font-size: 17px; }
         .icon-circle { width: 28px; height: 28px; background-color: var(--bidv-yellow-icon); border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
         .icon-circle svg { width: 15px; height: 15px; fill: #fff; display: block; }
@@ -160,20 +174,20 @@
         ======================= */
         @media screen and (max-width: 1200px) {
             body {
-                padding-left: 0; /* Xóa khoảng trống bên trái */
+                padding-left: 0; 
                 display: flex;
                 flex-direction: column;
             }
             .edit-panel {
-                position: static; /* Gắn form lên trên cùng màn hình */
+                position: static; 
                 width: 100%;
                 height: auto;
-                max-height: 45vh; /* Chỉ chiếm tối đa 45% chiều cao đt để có chỗ xem thư */
+                max-height: 45vh; 
                 border-bottom: 3px solid var(--green);
             }
             .frame-wrapper {
                 padding: 10px;
-                overflow-x: auto; /* Cho phép lấy tay vuốt sang ngang để đọc */
+                overflow-x: auto; 
                 align-items: flex-start;
                 justify-content: flex-start;
             }
@@ -190,7 +204,7 @@
             @page { size: 875px 1280px; margin: 0mm; }
             body { background: none; padding: 0; margin: 0; display: block; }
             .frame-wrapper { padding: 0; display: block; overflow: visible; min-height: 0; }
-            .frame { box-shadow: none; margin: 0; border: none; }
+            .frame { box-shadow: none; margin: 0; border: none; height: 1280px; min-height: unset; } /* Khóa cứng kích thước khi xuất file in */
             .no-print { display: none !important; }
         }
     </style>
